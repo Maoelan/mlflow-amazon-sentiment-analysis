@@ -47,9 +47,9 @@ with mlflow.start_run():
     mlflow.log_metric("f1-score", report["weighted avg"]["f1-score"])
 
     mlflow.sklearn.log_model(sk_model=model,
-                             artifact_path="model",
-                             input_example=input_example,
-                             signature=None)
+                            artifact_path="model",
+                            input_example=input_example,
+                            signature=None)
 
     joblib.dump(tfidf, 'tfidf_vectorizer.pkl')
     mlflow.log_artifact('tfidf_vectorizer.pkl')
