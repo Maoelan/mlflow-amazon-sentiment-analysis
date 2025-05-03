@@ -1,2 +1,4 @@
 mlartifacts/
 mlruns/
+best_model.pkl
+tfidf_vectorizer.pkl
