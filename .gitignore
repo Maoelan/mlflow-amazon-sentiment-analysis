@@ -1,4 +1,4 @@
 mlartifacts/
 mlruns/
-best_model.pkl
-tfidf_vectorizer.pkl
+Saved_Artifacts_No_Tuning/
+Saved_Artifacts_Tuning/

@@ -10,7 +10,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import LabelEncoder
 import string
+import os
 
+nltk.download('vader_lexicon')
 nltk.download('punkt')
 nltk.download('stopwords')
 
@@ -54,7 +56,7 @@ def assign_satisfaction_label(text):
 
 def load_and_preprocess_data(file_path):
     data = pd.read_csv(file_path)
-    data_raw = data[['reviewId', 'content']]
+    data_raw = data[['content']]
     
     sentiment_data = data_raw.copy()
 
