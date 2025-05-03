@@ -1,5 +1,6 @@
 import mlflow
 import mlflow.sklearn
+import dagshub
 import joblib
 import time
 import os
@@ -12,8 +13,10 @@ from sklearn.metrics import classification_report, accuracy_score, roc_auc_score
 from xgboost import XGBClassifier
 from preprocessing.amazon_preprocessing import load_and_preprocess_data
 
-# mlflow.set_tracking_uri("https://dagshub.com/Maoelan/amazon-sentiment-analysis.mlflow") # use dagshub
-mlflow.set_tracking_uri("http://127.0.0.1:5000") # using local MLflow server
+dagshub.init(repo_owner='Maoelan', repo_name='amazon-sentiment-analysis', mlflow=True)
+
+mlflow.set_tracking_uri("https://dagshub.com/Maoelan/amazon-sentiment-analysis.mlflow") # use dagshub
+# mlflow.set_tracking_uri("http://127.0.0.1:5000") # using local MLflow server
 mlflow.set_experiment("Amazon Sentiment Analysis Model")
 
 file_path = "amazon_reviews.csv"
