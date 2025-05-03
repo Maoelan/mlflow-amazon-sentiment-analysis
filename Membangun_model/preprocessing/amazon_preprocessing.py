@@ -8,7 +8,7 @@ from nltk.stem import PorterStemmer
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.preprocessing import LabelEncoder  # Add LabelEncoder
+from sklearn.preprocessing import LabelEncoder
 import string
 
 nltk.download('punkt')
