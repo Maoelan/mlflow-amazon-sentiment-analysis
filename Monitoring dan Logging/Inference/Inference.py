@@ -13,7 +13,7 @@ def preprocess_and_vectorize(text, tfidf_vectorizer):
     return vectorized.toarray().tolist()
 
 def send_prediction_to_server(vector_input):
-    url = "http://127.0.0.1:8080/invocations"
+    url = "http://127.0.0.1:8000/predict"
     headers = {"Content-Type": "application/json"}
     data = {"instances": vector_input}
 

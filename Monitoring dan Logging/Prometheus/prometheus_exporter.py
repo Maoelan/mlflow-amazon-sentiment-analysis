@@ -3,6 +3,8 @@ import requests
 import time
 import psutil
 from prometheus_client import Counter, Histogram, Gauge, generate_latest, CONTENT_TYPE_LATEST
+from prometheus_client.exposition import basic_auth_handler
+from prometheus_client import multiprocess
 
 app = Flask(__name__)
 
@@ -24,11 +26,14 @@ PROCESS_COUNT = Gauge('system_process_count', 'Number of running processes')
 # Metrics endpoint
 @app.route('/metrics', methods=['GET'])
 def metrics():
-    CPU_USAGE.set(psutil.cpu_percent(interval=1))  # CPU usage in percentage
-    RAM_USAGE.set(psutil.virtual_memory().percent)  # RAM usage in percentage
-    NET_SENT.set(psutil.net_io_counters().bytes_sent)  # Bytes sent over network
-    NET_RECV.set(psutil.net_io_counters().bytes_recv)  # Bytes received over network
-    PROCESS_COUNT.set(len(psutil.pids()))  # Number of processes
+    # Update system metrics
+    CPU_USAGE.set(psutil.cpu_percent(interval=1))
+    RAM_USAGE.set(psutil.virtual_memory().percent)
+    NET_SENT.set(psutil.net_io_counters().bytes_sent)
+    NET_RECV.set(psutil.net_io_counters().bytes_recv)
+    PROCESS_COUNT.set(len(psutil.pids()))
+    
+    # Generate metrics for Prometheus
     return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
 
 # Predict endpoint
@@ -36,24 +41,24 @@ def metrics():
 def predict():
     start_time = time.time()
     print("Incoming request...")
-    REQUEST_COUNT.inc()
-    THROUGHPUT.inc()
+    REQUEST_COUNT.inc()  # Increase request count
+    THROUGHPUT.inc()  # Increase throughput
 
-    api_url = "http://127.0.0.1:8080/invocations"
+    api_url = "http://127.0.0.1:5005/invocations"
     data = request.get_json()
 
     try:
         response = requests.post(api_url, json=data)
         duration = time.time() - start_time
-        REQUEST_LATENCY.observe(duration)
+        REQUEST_LATENCY.observe(duration)  # Record latency
 
         status_code = response.status_code
         LAST_STATUS_CODE.set(status_code)
 
         if status_code == 200:
-            REQUEST_SUCCESSES.inc()
+            REQUEST_SUCCESSES.inc()  # Successful request
         else:
-            REQUEST_FAILURES.inc()
+            REQUEST_FAILURES.inc()  # Failed request
 
         return jsonify(response.json())
 
@@ -63,4 +68,4 @@ def predict():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=7575)
+    app.run(host='127.0.0.1', port=8000)
