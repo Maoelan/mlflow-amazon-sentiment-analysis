@@ -2,3 +2,8 @@ mlartifacts/
 mlruns/
 Saved_Artifacts_No_Tuning/
 Saved_Artifacts_Tuning/
+Monitoring dan Logging/Prometheus/data
+Monitoring dan Logging/Prometheus/LICENSE
+Monitoring dan Logging/Prometheus/NOTICE
+Monitoring dan Logging/Prometheus/prometheus.exe
+Monitoring dan Logging/Prometheus/promtool.exe

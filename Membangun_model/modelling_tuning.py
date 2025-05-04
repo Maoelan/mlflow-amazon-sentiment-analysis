@@ -19,7 +19,7 @@ mlflow.set_tracking_uri("https://dagshub.com/Maoelan/amazon-sentiment-analysis.m
 # mlflow.set_tracking_uri("http://127.0.0.1:5000") # using local MLflow server
 mlflow.set_experiment("Amazon Sentiment Analysis Model")
 
-file_path = "amazon_reviews.csv"
+file_path = "../amazon_reviews.csv"
 data = load_and_preprocess_data(file_path)
 
 X = data['content']

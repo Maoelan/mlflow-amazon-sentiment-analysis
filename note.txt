@@ -1,0 +1,4 @@
+prometheus port : 9090
+grafana port : 3000
+run flask : python prometheus_exporter.py
+run prometheus : prometheus --config.file=prometheus.yml
