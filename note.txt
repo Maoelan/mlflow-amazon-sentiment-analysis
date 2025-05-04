@@ -2,3 +2,4 @@ prometheus port : 9090
 grafana port : 3000
 run flask : python prometheus_exporter.py
 run prometheus : prometheus --config.file=prometheus.yml
+run docker : docker run --name amazon-sentiment-analysis-hub -p 5005:8080 maoelana/amazon-sentiment-analysis:latest

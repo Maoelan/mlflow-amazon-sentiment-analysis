@@ -2,8 +2,6 @@ import joblib
 from amazon_preprocessing_inference import preprocessing_text, transform_text_to_tfidf
 import requests
 
-sentiment_labels = {0: "Dissatisfied", 1: "Neutral", 2: "Satisfied"}
-
 def load_tfidf(tfidf_path):
     return joblib.load(tfidf_path)
 
@@ -25,18 +23,26 @@ def send_prediction_to_server(vector_input):
         print(f"Error: {response.status_code} - {response.text}")
         return None
 
-def single_inference():
-    tfidf_path = 'tuning_xgboost_tfidf_vectorizer.pkl'
+def predict(text_data):
+    tfidf_path = 'tuning_xgboost_tfidf_vectorizer.joblib'
     tfidf_vectorizer = load_tfidf(tfidf_path)
 
-    user_input = input("Enter a review for sentiment prediction: ")
-    vector_input = preprocess_and_vectorize(user_input, tfidf_vectorizer)
+    vector_input = preprocess_and_vectorize(text_data[0], tfidf_vectorizer)
 
     result = send_prediction_to_server(vector_input)
+    
     if result:
+        sentiment_labels = {0: "Dissatisfied", 1: "Neutral", 2: "Satisfied"}
         predicted_class = result.get('predictions')[0]
         sentiment = sentiment_labels.get(predicted_class, "Unknown")
-        print(f"Sentiment Prediction: {sentiment}")
+        return sentiment
+    else:
+        return "Error in prediction"
+
+def inference():
+    user_input = input("Enter a review for sentiment prediction: ")
+    sentiment = predict([user_input])
+    print(f"Sentiment Prediction: {sentiment}")
 
 if __name__ == "__main__":
-    single_inference()
+    inference()

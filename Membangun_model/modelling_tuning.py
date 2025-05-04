@@ -77,11 +77,11 @@ with mlflow.start_run():
     mlflow.log_metric("roc_auc", roc_auc_score(y_test, best_model_for_current.predict_proba(X_test_tfidf), multi_class='ovr'))
     mlflow.log_metric("log_loss", log_loss(y_test, best_model_for_current.predict_proba(X_test_tfidf)))
 
-    model_filename = f"{artifact_folder}/tuning_xgboost_best_model.pkl"
+    model_filename = f"{artifact_folder}/tuning_xgboost_best_model.joblib"
     joblib.dump(best_model_for_current, model_filename)
     mlflow.log_artifact(model_filename)
 
-    tfidf_filename = f"{artifact_folder}/tuning_xgboost_tfidf_vectorizer.pkl"
+    tfidf_filename = f"{artifact_folder}/tuning_xgboost_tfidf_vectorizer.joblib"
     joblib.dump(tfidf, tfidf_filename)
     mlflow.log_artifact(tfidf_filename)
 
