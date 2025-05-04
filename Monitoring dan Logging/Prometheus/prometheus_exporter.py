@@ -10,7 +10,6 @@ app = Flask(__name__)
 
 REQUEST_COUNT = Counter('http_requests_total', 'Total HTTP Requests')
 REQUEST_LATENCY = Histogram('http_request_duration_seconds', 'HTTP Request Latency')
-THROUGHPUT = Counter('http_requests_throughput', 'Request throughput')
 REQUEST_FAILURES = Counter('http_requests_failures_total', 'Total failed HTTP requests')
 REQUEST_SUCCESSES = Counter('http_requests_success_total', 'Total successful HTTP requests')
 LAST_STATUS_CODE = Gauge('http_response_status_code', 'Last HTTP response status code')
@@ -36,7 +35,6 @@ def predict():
     start_time = time.time()
     print("Incoming request...")
     REQUEST_COUNT.inc()
-    THROUGHPUT.inc()
 
     api_url = "http://127.0.0.1:5005/invocations"
     data = request.get_json()

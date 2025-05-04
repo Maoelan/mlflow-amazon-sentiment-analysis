@@ -23,7 +23,7 @@ docker run -p 127.0.0.1:8080:8080 amazon-sentiment-analysis
 
 **Pull the Docker image from Docker Hub and run it on port 5005:8080**
 ```bash
-run docker : docker run --name amazon-sentiment-analysis-hub -p 5005:8080 maoelana/amazon-sentiment-analysis:latest
+docker run --name amazon-sentiment-analysis-hub -p 5005:8080 maoelana/amazon-sentiment-analysis:latest
 ```
 ## Monitoring
 
