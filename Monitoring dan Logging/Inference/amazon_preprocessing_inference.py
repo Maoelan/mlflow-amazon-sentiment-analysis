@@ -36,10 +36,9 @@ def preprocessing_text(text):
 
     return text
 
-def preprocess_inference_data(text_data):
-    processed_data = text_data.apply(preprocessing_text)
-    return processed_data
-
 def transform_text_to_tfidf(text_data, tfidf_vectorizer):
-    text_tfidf = tfidf_vectorizer.transform(text_data)
+    if isinstance(text_data, list):
+        text_data = pd.Series(text_data)
+    processed_data = text_data.apply(preprocessing_text)
+    text_tfidf = tfidf_vectorizer.transform(processed_data)
     return text_tfidf
